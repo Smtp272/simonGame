@@ -83,7 +83,6 @@ function startOver() {
 }
 
 function updateScore(currentScore) {
-    console.log(highScore)
     if(!highScore){
         highScore = 0
     }
