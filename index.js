@@ -79,7 +79,7 @@ function startOver() {
     level = 0
     gamePattern = []
     gameHasStarted = false
-    $("#level-title").text(`Game Over!!\nPress any key to restart`)
+    (`$("#level-title").html(`Game Over!!<br>Press any key to restart`)`)
 }
 
 function updateScore(currentScore) {
