@@ -3,18 +3,19 @@ let gamePattern = []
 let userClickedPattern = []
 let buttonColours = ["green", "red", "yellow", "blue"]
 let gameHasStarted = false
+let highScore = JSON.parse(localStorage.getItem('highScore'))
+
+updateScore(0)
 
 function nextSequence() {
     userClickedPattern = []
-    level ++
+    level++
     $("h1").text(`Level ${level}`)
     let randomNumber = Math.floor(Math.random() * 4)
     let randomChosenColour = buttonColours[randomNumber]
     gamePattern.push(randomChosenColour)
     $(`#${randomChosenColour}`).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)
     playSound(randomChosenColour)
-
-
 }
 
 $(document).keypress(function () {
@@ -45,10 +46,10 @@ function checkAnswer(currentLevel) {
     let previousRandomColour = gamePattern[currentLevel]
     let userColour = userClickedPattern[currentLevel]
     if (previousRandomColour === userColour) {
-        if (userClickedPattern.length === gamePattern.length){
+        if (userClickedPattern.length === gamePattern.length) {
             setTimeout(function () {
                 nextSequence()
-            },1000)
+            }, 1000)
         }
     } else {
         playSound("wrong")
@@ -74,8 +75,22 @@ function animateGameOver() {
 }
 
 function startOver() {
+    updateScore(level)
     level = 0
     gamePattern = []
     gameHasStarted = false
     $("#level-title").text(`Game Over!!\nPress any key to restart`)
+}
+
+function updateScore(currentScore) {
+    console.log(highScore)
+    if(!highScore){
+        highScore = 0
+    }
+    if (highScore < currentScore) {
+        highScore = currentScore
+        localStorage.setItem('highScore', currentScore)
+    }
+
+    $("#high-score").text(`High score: ${highScore}`)
 }
